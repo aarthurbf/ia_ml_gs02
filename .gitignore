@@ -1,0 +1,18 @@
+# Ambiente virtual (recriar com: python3.12 -m venv .venv && pip install -r requirements.txt)
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Os CSVs semestrais da A701 (~4 MB) são versionados para reprodutibilidade.
+# Pacotes ZIP anuais do INMET não devem ser versionados.
+*.zip
