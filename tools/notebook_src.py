@@ -270,6 +270,45 @@ prof = tab.groupby(["max_depth", "min_samples_leaf"])[["F1_treino_dobras", "F1_v
 prof["gap"] = (prof["F1_treino_dobras"] - prof["F1_val_media"]).round(3); prof
 
 # %% [markdown]
+# ### 6.1 Curva de validação — Variação de max_depth e análise de overfitting
+# Conforme exigido no projeto, geramos a curva de validação variando `max_depth` (de 2 a ilimitado/None) com `TimeSeriesSplit(5)`
+# usando **apenas o conjunto de treino**. O gráfico compara a evolução do F1 de treino e de validação (média ± desvio entre dobras)
+# para o modelo regularizado (`min_samples_leaf=5`) versus não regularizado (`min_samples_leaf=1`).
+
+# %%
+depths = [2, 3, 5, 8, 10, 15, 20, None]
+depth_x = np.arange(len(depths))
+depth_labels = [str(d) if d is not None else "None\n(sem limite)" for d in depths]
+
+fig, ax = plt.subplots(figsize=(9, 4.2))
+for msl, cor, estilo, rotulo in [(5, "tab:blue", "-", "min_samples_leaf=5 (modelo escolhido)"),
+                                 (1, "tab:red", "--", "min_samples_leaf=1 (sem regularização)")]:
+    tr_m, tr_s, val_m, val_s = [], [], [], []
+    for d in depths:
+        t_sc, v_sc = [], []
+        for tr_i, va_i in tscv.split(Xtr):
+            m = novo_rf(n_estimators=300, max_depth=d, min_samples_leaf=msl).fit(Xtr.iloc[tr_i], ytr.iloc[tr_i])
+            t_sc.append(sklearn.metrics.f1_score(ytr.iloc[tr_i], m.predict(Xtr.iloc[tr_i]), zero_division=0))
+            v_sc.append(sklearn.metrics.f1_score(ytr.iloc[va_i], m.predict(Xtr.iloc[va_i]), zero_division=0))
+        tr_m.append(np.mean(t_sc)); tr_s.append(np.std(t_sc))
+        val_m.append(np.mean(v_sc)); val_s.append(np.std(v_sc))
+    ax.plot(depth_x, tr_m, linestyle=estilo, color=cor, marker="o", label=f"Treino ({rotulo})")
+    ax.fill_between(depth_x, np.array(tr_m) - np.array(tr_s), np.array(tr_m) + np.array(tr_s), color=cor, alpha=0.10)
+    ax.plot(depth_x, val_m, linestyle=estilo, color=cor, marker="s", fillstyle="none", lw=2, label=f"Validação ({rotulo})")
+    ax.fill_between(depth_x, np.array(val_m) - np.array(val_s), np.array(val_m) + np.array(val_s), color=cor, alpha=0.15)
+
+ax.set_xticks(depth_x, depth_labels)
+ax.set_xlabel("max_depth (profundidade máxima da árvore)")
+ax.set_ylabel("F1-Score (classe 1 — calor extremo)")
+ax.set_title("Curva de Validação: F1 de Treino × Validação vs max_depth (TimeSeriesSplit, 5 dobras, só treino)")
+ax.axvline(x=len(depths)-1, color="gray", ls=":", alpha=0.7, label="Configuração escolhida (max_depth=None, leaf=5)")
+ax.set_ylim(0.25, 1.05)
+ax.legend(fontsize=7.5, loc="center left", bbox_to_anchor=(1.01, 0.5))
+plt.tight_layout()
+plt.savefig(FIG / "09_curva_validacao_max_depth.png", dpi=150, bbox_inches="tight")
+plt.show()
+
+# %% [markdown]
 # **Escolha:** a configuração de maior F1 médio na validação. Desvio‑padrão entre dobras é alto porque cada dobra cobre
 # ~5 meses e o número de dias extremos varia muito com a estação (5 a 26 positivos). O conjunto de teste **não** foi usado.
 # O `GridSearchCV(refit=True)` retreina a configuração vencedora com **todo** o treino.
@@ -280,7 +319,7 @@ modelo = gs.best_estimator_
 print(modelo)
 
 # %% [markdown]
-# ### 6.1 Limiar de decisão (escolhido sem tocar no teste)
+# ### 6.2 Limiar de decisão (escolhido sem tocar no teste)
 # Geramos probabilidades **fora da amostra** nas 5 dobras do `TimeSeriesSplit` (só treino) com a configuração vencedora
 # e analisamos a curva Precision‑Recall. **Regra:** maior limiar que mantém **Recall ≥ 0,80** (meta do projeto) —
 # perder um dia extremo (falso negativo) é mais grave para o cidadão que um alerta a mais.
