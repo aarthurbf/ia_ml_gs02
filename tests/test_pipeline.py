@@ -169,8 +169,32 @@ def test_replay_cli(bundle, capsys):
     assert out["modo"] == "replay" and "retrospectiva" in out["observacao"]
 
 
-def test_replay_data_invalida():
-    assert pp.main(["--replay", "2019-01-01", "--dry-run"]) in (2, 4)
+def test_replay_data_invalida(bundle):
+    assert pp.main(["--replay", "2019-01-01", "--dry-run"]) == 2
+
+
+def test_modelo_padrao_existencia():
+    p = ML / "models" / "sereno_rf.joblib"
+    assert p.exists()
+    b = pp.carregar_modelo(p)
+    assert b["versao"] == "sereno-rf-1.0"
+    assert len(b["features"]) == len(FEATURES)
+
+
+def test_data_readme_existencia():
+    p = ML / "data" / "README.md"
+    assert p.exists()
+    conteudo = p.read_text(encoding="utf-8")
+    assert "INMET" in conteudo
+    assert "A701" in conteudo
+    assert len(conteudo) > 200
+
+
+def test_valores_aceitos_nivel():
+    niveis_validos = {"Perigo", "Atencao", "SemAlerta"}
+    for prob in [0.0, 0.1, 0.39, 0.40, 0.55, 0.70, 0.71, 0.95, 1.0]:
+        n = pp.nivel(prob)
+        assert n in niveis_validos
 
 
 class _Mock(BaseHTTPRequestHandler):
