@@ -11,4 +11,4 @@ ipykernel==7.2.0
 jupyter_client==8.8.0
 ipython==9.12.0
 jupyter_core==5.9.1
-# Interface opcional para abrir o notebook (não usada na execução registrada): pip install jupyterlab
+jupyter==1.1.1
