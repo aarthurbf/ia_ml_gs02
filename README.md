@@ -28,7 +28,6 @@ Previsão, na véspera, de **dia de calor extremo** em São Paulo (estação INM
 * **Vídeo Demonstrativo:** [https://youtu.be/WlFBxHZtbzQ](https://youtu.be/WlFBxHZtbzQ)
 
 > 📖 **Relatório Técnico Completo:** [`RELATORIO_ML.md`](RELATORIO_ML.md) (≤ 3 páginas, tabelas da rubrica, análise crítica e baselines).
-> 🎥 **Roteiro do Vídeo de Apresentação:** [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md) (5 minutos cronometrados).
 > 🤖 **Registro de Prompts de IA:** [`prompts.md`](prompts.md).
 
 ---
@@ -39,7 +38,6 @@ Previsão, na véspera, de **dia de calor extremo** em São Paulo (estação INM
 ml/
 ├── notebook_sereno_calor.ipynb     # Jupyter Notebook completo, executado com todas as saídas
 ├── RELATORIO_ML.md                 # Relatório técnico acadêmico (máximo 3 páginas)
-├── ROTEIRO_VIDEO.md                # Roteiro cronometrado de gravação do vídeo (5 min)
 ├── README.md                       # Guia do módulo e contrato de integração
 ├── prompts.md                      # Registro de uso e governança de IA
 ├── requirements.txt                # Dependências fixadas (Python 3.12 + jupyter)
