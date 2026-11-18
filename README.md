@@ -25,7 +25,7 @@ Previsão, na véspera, de **dia de calor extremo** em São Paulo (estação INM
 | **Diagnóstico de Overfitting ($F1_{treino} - F1_{teste}$):** | **0,075** ($0,769 - 0,694$; dentro do limite $\le 0,10$) |
 
 * **Repositório GitHub:** [https://github.com/aarthurbf/ia_ml_gs02](https://github.com/aarthurbf/ia_ml_gs02)
-* **Vídeo Demonstrativo:** `[LINK DO VÍDEO YOUTUBE - PENDENTE DE GRAVAÇÃO PELA EQUIPE]`
+* **Vídeo Demonstrativo:** [https://youtu.be/WlFBxHZtbzQ](https://youtu.be/WlFBxHZtbzQ)
 
 > 📖 **Relatório Técnico Completo:** [`RELATORIO_ML.md`](RELATORIO_ML.md) (≤ 3 páginas, tabelas da rubrica, análise crítica e baselines).
 > 🎥 **Roteiro do Vídeo de Apresentação:** [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md) (5 minutos cronometrados).
