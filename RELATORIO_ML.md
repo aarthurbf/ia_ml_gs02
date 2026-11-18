@@ -9,7 +9,7 @@
 | Jorge Luis | RM554418 |
 
 * **Repositório GitHub:** [https://github.com/aarthurbf/ia_ml_gs02](https://github.com/aarthurbf/ia_ml_gs02)
-* **Vídeo Demonstrativo (YouTube Não Listado):** `[LINK DO VÍDEO YOUTUBE - PENDENTE DE GRAVAÇÃO PELA EQUIPE]`
+* **Vídeo Demonstrativo (YouTube Não Listado):** [https://youtu.be/WlFBxHZtbzQ](https://youtu.be/WlFBxHZtbzQ)
 
 ---
 
